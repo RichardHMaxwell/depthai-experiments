@@ -1,4 +1,6 @@
 import json
+import time
+
 data = {}
 counter = { 'up': 0, 'down': 0, 'left': 0, 'right': 0 } # Y axis (up/down), X axis (left/right)
 
@@ -38,6 +40,7 @@ send()
 
 while True:
     tracklets = node.io['tracklets'].get()
+    time.sleep(1)
     for t in tracklets.tracklets:
         # If new tracklet, save its centroid
         if t.status == Tracklet.TrackingStatus.NEW:
