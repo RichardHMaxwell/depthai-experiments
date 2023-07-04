@@ -138,7 +138,7 @@ with dai.Device(pipeline) as device:
         return cv2.resize(arr, shape).transpose(2, 0, 1).flatten()
 
     if VIDEO:
-        videoQ = device.getInputQueue("video_in")
+        videoQ = device.getInputQueue("video_in", 1, blocking=True)
 
         cap = cv2.VideoCapture(str(Path(videoPath).resolve().absolute()))
         while cap.isOpened():
@@ -154,6 +154,7 @@ with dai.Device(pipeline) as device:
             img.setWidth(544)
             img.setHeight(320)
             videoQ.send(img)
+            print("Sent frame to input queue.")
 
             update()
             if cv2.waitKey(1) == ord('q'):
